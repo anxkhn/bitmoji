@@ -56,7 +56,7 @@
             var activeImages = 0
             var waitToLoad = 0;
             $.getJSON("api.json", function (data) {
-                displayImages(data, 4000)
+                displayImages(data, 80)
                 searchFilter = function () {
                     displayImages(data, data["friends"].length - 1)
                     var searchTerm = $("#tag-search").val()
