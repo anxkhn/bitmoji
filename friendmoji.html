@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <title>Friendmoji Generator</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+</head>
+
+<body>
+    <div id="search-bar" style="height: 40px; position: fixed; top: 10px;">
+        <input type="text" id="tag-search" onkeyup="searchFilter()" placeholder="Search tags...">
+    </div>
+    <div id="container" style="margin-top: 40px;">
+
+    </div>
+    <script type="text/javascript">
+        var searchFilter = function () {}
+
+        function getUrlParams(prop) {
+            var params = {};
+            var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
+            var definitions = search.split('&');
+
+            definitions.forEach(function (val, key) {
+                var parts = val.split('=', 2);
+                params[parts[0]] = parts[1];
+            });
+
+            return (prop && prop in params) ? params[prop] : "";
+        }
+
+        $(function () {
+            var firstID = getUrlParams("firstid")
+            var secondID = getUrlParams("secondid")
+            if(firstID == "" || secondID == ""){
+                alert("You must assign both a url param for \"firstid\" and \"secondid\"")
+                return false;
+            }
+            var lastImageIndex = 0
+            var displayImages = function (comicData, endIndex) {
+                if (endIndex < comicData["friends"].length) {
+                    $.each(comicData["friends"].slice(lastImageIndex, endIndex), function (_, comicInfo) {
+                        imgURL = comicInfo.src
+                        imgURL = imgURL.replace("%s", firstID)
+                        imgURL = imgURL.replace("%s", secondID)
+                        $("#container").append("<img class='comic-img' src='" + imgURL +
+                            "' width=100 data-tags='" + comicInfo.tags + "'/>")
+
+                    })
+                } else {
+                    console.log("All images loaded")
+                }
+                lastImageIndex = endIndex
+            }
+            var activeImages = 0
+            var waitToLoad = 0;
+            $.getJSON("api.json", function (data) {
+                displayImages(data, 80)
+                searchFilter = function () {
+                    displayImages(data, data["friends"].length - 1)
+                    var searchTerm = $("#tag-search").val()
+                    $(".comic-img").each(function (_, comicElem) {
+                        var display = 0
+                        if (searchTerm == "") {
+                            $(this).show()
+                            return true
+                        }
+                        tags = $(this).attr("data-tags")
+                        $.each(tags.split(","), function (_, tag) {
+                            if (tag.includes(searchTerm)) {
+                                display = 1;
+                                return false
+                            }
+                        })
+                        if (display == 0) {
+                            $(this).hide()
+                        } else {
+                            $(this).show()
+                        }
+                    })
+                }
+                $(window).scroll(function () {
+                    //console.log($(window).scrollTop() + screen.height, $("#container").height())
+                    if ($(window).scrollTop() + screen.height >= $("#container").height() && !
+                        waitToLoad) {
+                        displayImages(data, lastImageIndex + 20)
+                        waitToLoad = 1
+                        setTimeout(function () {
+                            waitToLoad = 0
+                        }, 250)
+                    }
+                });
+            })
+        })
+    </script>
+</bodY>
+
+</html>
