@@ -6,7 +6,7 @@ The **Bitmojis and Friendmojis Generator** is a versatile web application that a
 
 ## Background
 
-Taking screenshots of Bitmojis and Friendmojis from various platforms often results in lower quality images with non-transparent backgrounds. To address this issue, this project was created. It allows you to directly access high-quality Bitmojis and Friendmojis from Snapchat servers.
+Taking screenshots of Bitmojis from Snapchat app resulted in lower quality images with non-transparent backgrounds and also your friend getting screenshot taken notification. To bypass this issue, I built this project to allow you to directly generate high-quality Bitmojis and Friendmojis directly from Snapchat servers.
 
 ## Technology Stack
 
