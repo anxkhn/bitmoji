@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitmojis and Friendmojis Generator</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-control {
+            flex: 1;
+        }
+
+        .btn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Bitmojis and Friendmojis Generator</h2>
+
+        <h4>Generating Bitmojis</h4>
+        <p>In order to use the <a
+                href="https://anxkhn.github.io/bitmoji/bitmoji.html?firstid=f48e5674-30b2-4f60-aa65-9a0354a1684a">Bitmoji
+                generator</a>, you require a single ID which goes here in the URL:</p>
+        <p><code>https://anxkhn.github.io/bitmoji/bitmoji.html?firstid=IDHERE1</code></p>
+
+        <form id="generateBitmojiForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="BitmojiID" name="BitmojiID" placeholder="Enter Bitmoji ID">
+                <button type="submit" class="btn btn-primary">Generate Bitmoji</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <h4>Generating Friendmojis</h4>
+        <p>In order to use the <a
+                href="https://anxkhn.github.io/bitmoji/friendmoji.html?firstid=f48e5674-30b2-4f60-aa65-9a0354a1684a&secondid=b84252ec-d02e-4a50-8682-0445ff64379c">Friendmoji
+                generator</a>, you require two IDs which go here in the URL:</p>
+        <p><code>https://anxkhn.github.io/bitmoji/friendmoji.html?firstid=IDHERE1&secondid=IDHERE2</code></p>
+
+        <form id="generateFriendmojiForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="FriendmojiID1" name="FriendmojiID1"
+                    placeholder="Enter IDHERE1">
+                <input type="text" class="form-control" id="FriendmojiID2" name="FriendmojiID2"
+                    placeholder="Enter IDHERE2">
+                <button type="submit" class="btn btn-primary">Generate Friendmoji</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <h4>Data Collection and Acceptable Formats</h4>
+        <p>There are two processes for extracting the IDs:</p>
+        <ul>
+            <li>Using <a
+                    href="https://chrome.google.com/webstore/detail/bitmoji/bfgdeiadkckfbkeigkoncpdieiiefpig">Chrome
+                    Extension</a></li>
+            <li>Using ROOT permission on Android and extracting from
+                <code>/data/data/com.snapchat.android/database/main.db</code>
+            </li>
+        </ul>
+        <p>Two acceptable formats of IDs are:</p>
+        <ul>
+            <li><code>410601612_13-s5</code> (older accounts)</li>
+            <li><code>f48e5674-30b2-4f60-aa65-9a0354a1684a</code> (newer accounts)</li>
+        </ul>
+
+        <hr>
+
+        <h4>API Source and List</h4>
+        <p>Access the Bitmoji list in JSON format <a href="https://api.bitmoji.com/content/templates">here</a>.</p>
+        <p>Use the entries in "imoji" for solo comics, and the entries in "friends" for Friendmojis.</p>
+
+        <hr>
+
+        <h4>Modifying</h4>
+        <p>You can modify the following attributes according to your needs:</p>
+        <ul>
+            <li><code>transparent=1</code> to set the background to true (enabled by default on all supported Bitmojis).
+            </li>
+            <li><code>width=XXX</code> scale image width to XXX pixels (set to 500 - the highest possible to generate at
+                the moment).</li>
+        </ul>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Function to handle the Bitmoji form submission
+        document.getElementById("generateBitmojiForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            var BitmojiID = document.getElementById("BitmojiID").value;
+            var generateBitmojiURL = `/bitmoji.html?firstid=${BitmojiID}`;
+            window.location.href = generateBitmojiURL;
+        });
+
+        // Function to handle the Friendmoji form submission
+        document.getElementById("generateFriendmojiForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            var FriendmojiID1 = document.getElementById("FriendmojiID1").value;
+            var FriendmojiID2 = document.getElementById("FriendmojiID2").value;
+            var redirectURL = `/friendmoji.html?firstid=${FriendmojiID1}&secondid=${FriendmojiID2}`;
+            window.location.href = redirectURL;
+        });
+    </script>
+</body>
+
+</html>
