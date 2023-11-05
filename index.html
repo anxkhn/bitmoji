@@ -120,7 +120,7 @@
         document.getElementById("generateBitmojiForm").addEventListener("submit", function (e) {
             e.preventDefault();
             var BitmojiID = document.getElementById("BitmojiID").value;
-            var generateBitmojiURL = `/bitmoji.html?firstid=${BitmojiID}`;
+            var generateBitmojiURL = `/bitmoji/bitmoji.html?firstid=${BitmojiID}`;
             window.location.href = generateBitmojiURL;
         });
 
@@ -129,7 +129,7 @@
             e.preventDefault();
             var FriendmojiID1 = document.getElementById("FriendmojiID1").value;
             var FriendmojiID2 = document.getElementById("FriendmojiID2").value;
-            var redirectURL = `/friendmoji.html?firstid=${FriendmojiID1}&secondid=${FriendmojiID2}`;
+            var redirectURL = `/bitmoji/friendmoji.html?firstid=${FriendmojiID1}&secondid=${FriendmojiID2}`;
             window.location.href = redirectURL;
         });
     </script>
