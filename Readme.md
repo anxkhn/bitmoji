@@ -1,5 +1,7 @@
 # Bitmojis and Friendmojis Generator
 
+This is a Fork of [anxkhn/bitmoji](https://github.com/anxkhn/bitmoji) with working Github page.
+
 ## Introduction
 
 The **Bitmojis and Friendmojis Generator** is a versatile web application that allows you to generate and search Bitmojis and Friendmojis. Whether you want to create customized Bitmojis for personal use or explore a wide range of Friendmojis, this tool has you covered. It simplifies the process of generating and searching for Bitmoji content with ease.
