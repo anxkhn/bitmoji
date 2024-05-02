@@ -5,15 +5,110 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            margin: 20px 0;
+            border: none;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .comic-img-container {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .comic-img-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .comic-img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .comic-img-container:hover .comic-img-overlay {
+            display: flex;
+        }
+
+        .download-button {
+            cursor: pointer;
+        }
+
+        .download-button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #loading {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="search-bar" style="height: 40px; position: fixed; top: 10px;">
-        <input type="text" id="tag-search" onkeyup="searchFilter()" placeholder="Search tags...">
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h2>Bitmoji Generator</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="text" id="tag-search" class="form-control" placeholder="Search tags..."
+                        onkeyup="searchFilter()">
+                </div>
+                <div id="container" class="row"></div>
+                <div id="loading" class="text-center mt-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="container" style="margin-top: 40px;">
 
-    </div>
+
+    
     <script type="text/javascript">
         var searchFilter = function () {}
 
