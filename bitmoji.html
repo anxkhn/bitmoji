@@ -109,23 +109,25 @@
     </div>
 
     <script>
+        function searchFilter() {
+            displayImages(data, data["imoji"].length - 1);
+            var searchTerm = $("#tag-search").val().toLowerCase();
+            $(".comic-img").each(function (_, comicElem) {
+                var display = 0;
+                var tags = $(this).attr("data-tags").toLowerCase();
+                if (searchTerm === "") {
+                    $(this).show();
+                } else if (tags.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
         // Your JavaScript code here
         $(function () {
-            var searchFilter = function () {
-                displayImages(data, data["imoji"].length - 1);
-                var searchTerm = $("#tag-search").val().toLowerCase();
-                $(".comic-img").each(function (_, comicElem) {
-                    var display = 0;
-                    var tags = $(this).attr("data-tags").toLowerCase();
-                    if (searchTerm === "") {
-                        $(this).show();
-                    } else if (tags.includes(searchTerm)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            }
+          
 
             var getUrlParams = function (prop) {
                 var params = {};
