@@ -166,7 +166,7 @@
             
             var activeImages = 0
             var waitToLoad = 0;
-            $.getJSON("api.json", function (data) {
+            $.getJSON("https://api.bitmoji.com/content/templates", function (data) {
                 displayImages(data, 80)
                 searchFilter = function () {
                     displayImages(data, data["imoji"].length - 1)
