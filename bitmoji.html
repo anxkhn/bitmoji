@@ -5,11 +5,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-    
-<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -158,7 +154,7 @@
             var activeImages = 0
             var waitToLoad = 0;
             $.getJSON("api.json", function (data) {
-                displayImages(data, 100)
+                displayImages(data, 80)
                 searchFilter = function () {
                     displayImages(data, data["imoji"].length - 1)
                     var searchTerm = $("#tag-search").val()
@@ -194,7 +190,6 @@
                         }, 250)
                     }
                 });
-                
             })
         })
     </script>
