@@ -140,8 +140,8 @@
                         var imgURL = comicInfo.src.replace("%s", firstID);
                         var imgContainer = $("<div class='comic-img-container'></div>");
                         var imgElement = $("<img src='" + imgURL + "' width='100' data-tags='" + comicInfo.tags + "'/>");
-                        var overlay = $("<div class='comic-img-overlay'><div class='download-button'><a href='" + imgURL + "' download='image.jpg'>Download</a></div></div>");
-                        imgContainer.append(imgElement).append(overlay);
+                       // var overlay = $("<div class='comic-img-overlay'><div class='download-button'><a href='" + imgURL + "' download='image.jpg'>Download</a></div></div>");
+                       // imgContainer.append(imgElement).append(overlay);
                         $("#container").append(imgContainer);
                     });
                 } else {
