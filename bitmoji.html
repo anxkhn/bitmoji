@@ -109,22 +109,11 @@
     </div>
 
     <script>
+        var searchFilter = function () {}
+
+        
         $(function () {
-            searchFilter = function () {
-               // displayImages(data, data["imoji"].length - 1);
-                var searchTerm = $("#tag-search").val().toLowerCase();
-                $(".comic-img").each(function (_, comicElem) {
-                    var display = 0;
-                    var tags = $(this).attr("data-tags").toLowerCase();
-                    if (searchTerm === "") {
-                        $(this).show();
-                    } else if (tags.includes(searchTerm)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                }
-                });
-            }
+  
 
             var getUrlParams = function (prop) {
                 var params = {};
@@ -168,6 +157,22 @@
 
             $.getJSON("api.json", function (data) {
                 displayImages(data, 80);
+                var searchFilter = function searchFilter() {
+                    displayImages(data, data["imoji"].length - 1);
+                    var searchTerm = $("#tag-search").val().toLowerCase();
+                    $(".comic-img").each(function (_, comicElem) {
+                        var display = 0;
+                        var tags = $(this).attr("data-tags").toLowerCase();
+                        if (searchTerm === "") {
+                            $(this).show();
+                        } else if (tags.includes(searchTerm)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                    }
+                    });
+                }
+    
                 $(window).scroll(function () {
                     if ($(window).scrollTop() + $(window).height() >= $("#container").height() && !waitToLoad) {
                         loading.show(); // Show loading animation
