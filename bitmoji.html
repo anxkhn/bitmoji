@@ -180,16 +180,17 @@
                 }
                 
                 $(window).scroll(function () {
-                    //console.log($(window).scrollTop() + screen.height, $("#container").height())
-                    if ($(window).scrollTop() + screen.height >= $("#container").height() && !
-                        waitToLoad) {
-                        displayImages(data, lastImageIndex + 20)
-                        waitToLoad = 1
+                    if ($(window).scrollTop() + $(window).height() >= $("#container").height() && !waitToLoad) {
+                        loading.show(); // Show loading animation
+                        displayImages(data, lastImageIndex + 20);
+                        waitToLoad = 1;
                         setTimeout(function () {
-                            waitToLoad = 0
-                        }, 250)
+                            loading.hide(); // Hide loading animation
+                            waitToLoad = 0;
+                        }, 2500); // Adjust the time based on your loading time
                     }
                 });
+                
             })
         })
     </script>
