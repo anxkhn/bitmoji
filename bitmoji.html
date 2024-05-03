@@ -152,11 +152,12 @@
             var displayImages = function (comicData, endIndex) {
                 if (endIndex < comicData["imoji"].length) {
                     $.each(comicData["imoji"].slice(lastImageIndex, endIndex), function (_, comicInfo) {
-                        imgURL = comicInfo.src
-                        imgURL = imgURL.replace("%s", firstID)
-                        $("#container").append("<img class='comic-img' src='" + imgURL +
-                            "' width=100 data-tags='" + comicInfo.tags + "'/>")
-
+                           var imgURL = comicInfo.src.replace("%s", firstID)                 
+                        var imgContainer = $("<div class='comic-img-container' data-tags='" + comicInfo.tags + "'></div>");
+                        var imgElement = $("<img src='" + imgURL + "' width='100' />");
+                        var overlay = $("<div class='comic-img-overlay'><div class='download-button'><a href='" + imgURL + "' target='_blank'>" + comicInfo.alt_text + "</a></div></div>");
+                        imgContainer.append(imgElement).append(overlay);
+                        $("#container").append(imgContainer);
                     })
                 } else {
                     console.log("All images loaded")
@@ -171,7 +172,7 @@
                 searchFilter = function () {
                     displayImages(data, data["imoji"].length - 1)
                     var searchTerm = $("#tag-search").val()
-                    $(".comic-img").each(function (_, comicElem) {
+                    $(".comic-img-container").each(function (_, comicElem) {
                         var display = 0
                         if (searchTerm == "") {
                             $(this).show()
@@ -196,7 +197,7 @@
                     //console.log($(window).scrollTop() + screen.height, $("#container").height())
                     if ($(window).scrollTop() + screen.height >= $("#container").height() && !
                         waitToLoad) {
-                        displayImages(data, lastImageIndex + 20)
+                        displayImages(data, lastImageIndex + 40)
                         waitToLoad = 1
                         setTimeout(function () {
                             waitToLoad = 0
