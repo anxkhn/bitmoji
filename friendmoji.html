@@ -108,107 +108,92 @@
         </div>
     </div>
 
-    <script>
-        // Your JavaScript code here
+   <script type="text/javascript">
+        var searchFilter = function () {}
+
+        function getUrlParams(prop) {
+            var params = {};
+            var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
+            var definitions = search.split('&');
+
+            definitions.forEach(function (val, key) {
+                var parts = val.split('=', 2);
+                params[parts[0]] = parts[1];
+            });
+
+            return (prop && prop in params) ? params[prop] : "";
+        }
+
         $(function () {
-            var searchFilter = function () {
-                displayImages(data, data["friends"].length - 1);
-                var searchTerm = $("#tag-search").val().toLowerCase();
-                $(".comic-img").each(function (_, comicElem) {
-                    var display = 0;
-                    var tags = $(this).attr("data-tags").toLowerCase();
-                    if (searchTerm === "") {
-                        $(this).show();
-                    } else if (tags.includes(searchTerm)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            }
-
-            var getUrlParams = function (prop) {
-                var params = {};
-                var search = decodeURIComponent(window.location.search.slice(1));
-                var definitions = search.split('&');
-
-                definitions.forEach(function (val) {
-                    var parts = val.split('=');
-                    params[parts[0]] = parts[1];
-                });
-
-                return (prop && prop in params) ? params[prop] : "";
-            }
-
-            var firstID = getUrlParams("firstid");
-            var secondID = getUrlParams("secondid");
-            if (firstID === "" || secondID === "") {
-                alert("You must assign both URL parameters for \"firstid\" and \"secondid\"");
+            var firstID = getUrlParams("firstid")
+            var secondID = getUrlParams("secondid")
+            if(firstID == "" || secondID == ""){
+                alert("You must assign both a url param for \"firstid\" and \"secondid\"")
                 return false;
             }
 
-            var lastImageIndex = 0;
+            var lastImageIndex = 0
+
             var displayImages = function (comicData, endIndex) {
                 if (endIndex < comicData["friends"].length) {
                     $.each(comicData["friends"].slice(lastImageIndex, endIndex), function (_, comicInfo) {
-                        var imgURL = comicInfo.src.replace("%s", firstID).replace("%s", secondID);
-                        var imgContainer = $("<div class='comic-img-container'></div>");
-                        var imgElement = $("<img src='" + imgURL + "' width='100' data-tags='" + comicInfo.tags + "'/>");
-                        var overlay = $("<div class='comic-img-overlay'><div class='download-button'><a href='" + imgURL + "' download='image.jpg'>Download</a></div></div>");
+                        var imgURL = comicInfo.src.replace("%s", firstID).replace("%s", secondID)               
+                        var imgContainer = $("<div class='comic-img-container' data-tags='" + comicInfo.tags + "'></div>");
+                        var imgElement = $("<img src='" + imgURL + "' width='100' />");
+                        var overlay = $("<div class='comic-img-overlay'><div class='download-button'><a href='" + imgURL + "' target='_blank'>" + comicInfo.alt_text + "</a></div></div>");
                         imgContainer.append(imgElement).append(overlay);
                         $("#container").append(imgContainer);
-                    });
+                    })
                 } else {
-                    console.log("All images loaded");
+                    console.log("All images loaded")
                 }
-                lastImageIndex = endIndex;
+                lastImageIndex = endIndex
             }
 
-            var activeImages = 0;
+            var activeImages = 0
             var waitToLoad = 0;
-            var loading = $("#loading");
-
             $.getJSON("api.json", function (data) {
-                displayImages(data, 200);
+                displayImages(data, 80)
                 searchFilter = function () {
-                    displayImages(data, data["friends"].length - 1);
-                    var searchTerm = $("#tag-search").val();
-                    $(".comic-img").each(function (_, comicElem) {
-                        var display = 0;
+                    displayImages(data, data["friends"].length - 1)
+                    var searchTerm = $("#tag-search").val()
+                    $(".comic-img-container").each(function (_, comicElem) {
+                        var display = 0
                         if (searchTerm == "") {
-                            $(this).show();
-                            return true;
+                            $(this).show()
+                            return true
                         }
-                        var tags = $(this).attr("data-tags");
+                        tags = $(this).attr("data-tags")
                         $.each(tags.split(","), function (_, tag) {
                             if (tag.includes(searchTerm)) {
                                 display = 1;
-                                return false;
+                                return false
                             }
-                        });
+                        })
                         if (display == 0) {
-                            $(this).hide();
+                            $(this).hide()
                         } else {
-                            $(this).show();
+                            $(this).show()
                         }
-                    });
+                    })
                 }
+
                 $(window).scroll(function () {
-                    if ($(window).scrollTop() + $(window).height() >= $("#container").height() && !waitToLoad) {
-                        loading.show(); // Show loading animation
-                        displayImages(data, lastImageIndex + 20);
-                        waitToLoad = 1;
+                    //console.log($(window).scrollTop() + screen.height, $("#container").height())
+                    if ($(window).scrollTop() + screen.height >= $("#container").height() && !
+                        waitToLoad) {
+                        displayImages(data, lastImageIndex + 40)
+                        waitToLoad = 1
                         setTimeout(function () {
-                            loading.hide(); // Hide loading animation
-                            waitToLoad = 0;
-                        }, 2500); // Adjust the time based on your loading time
+                            waitToLoad = 0
+                        }, 250)
                     }
                 });
-            });
-        });
+            })
+        })
     </script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
